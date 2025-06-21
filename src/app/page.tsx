@@ -363,31 +363,6 @@ export default function Home() {
       </div>
       <div className="mb-2 text-lg font-semibold text-center text-blue-700">{message}</div>
       <div className="flex flex-col sm:flex-row gap-8">
-        {/* Player Board */}
-        <div>
-          <div className="mb-2 text-lg font-semibold text-center">Your Board</div>
-          <div className="mb-2 text-base text-center text-blue-800 font-bold">
-            Decks left: {playerTotalLeft}
-          </div>
-          <div className="grid grid-cols-10 gap-1 bg-blue-200 p-2 rounded shadow">
-            {playerBoard.map((row, rIdx) =>
-              row.map((cell, cIdx) => (
-                <button
-                  key={`p-${rIdx}-${cIdx}`}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded border border-blue-400 flex items-center justify-center transition-colors
-                    ${cell.hasShip ? (cell.isHit ? "bg-red-600" : "bg-blue-600") : cell.isMiss ? "bg-gray-300" : "bg-white hover:bg-blue-100"}
-                    ${cell.isPlaced && phase === 'placement' ? "cursor-not-allowed" : "cursor-pointer"}
-                  `}
-                  onClick={() => handleCellClick(rIdx, cIdx)}
-                  disabled={cell.isPlaced && phase === 'placement'}
-                  aria-label={`Cell ${rIdx + 1}, ${cIdx + 1}`}
-                >
-                  {cell.isHit ? "✖" : cell.isMiss ? "•" : ""}
-                </button>
-              ))
-            )}
-          </div>
-        </div>
         {/* Opponent Board */}
         <div>
           <div className="mb-2 text-lg font-semibold text-center">Opponent Board</div>
@@ -413,6 +388,32 @@ export default function Home() {
             )}
           </div>
         </div>
+        {/* Player Board */}
+        <div>
+          <div className="mb-2 text-lg font-semibold text-center">Your Board</div>
+          <div className="mb-2 text-base text-center text-blue-800 font-bold">
+            Decks left: {playerTotalLeft}
+          </div>
+          <div className="grid grid-cols-10 gap-1 bg-blue-200 p-2 rounded shadow">
+            {playerBoard.map((row, rIdx) =>
+              row.map((cell, cIdx) => (
+                <button
+                  key={`p-${rIdx}-${cIdx}`}
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded border border-blue-400 flex items-center justify-center transition-colors
+                    ${cell.hasShip ? (cell.isHit ? "bg-red-600" : "bg-blue-600") : cell.isMiss ? "bg-gray-300" : "bg-white hover:bg-blue-100"}
+                    ${cell.isPlaced && phase === 'placement' ? "cursor-not-allowed" : "cursor-pointer"}
+                  `}
+                  onClick={() => handleCellClick(rIdx, cIdx)}
+                  disabled={cell.isPlaced && phase === 'placement'}
+                  aria-label={`Cell ${rIdx + 1}, ${cIdx + 1}`}
+                >
+                  {cell.isHit ? "✖" : cell.isMiss ? "•" : ""}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+
         {/* Ship selection */}
         {phase === 'placement' && (
           <div className="flex flex-col gap-4 items-center">
