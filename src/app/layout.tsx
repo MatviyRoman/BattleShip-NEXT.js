@@ -52,7 +52,7 @@ export default function RootLayout({
           </a>
           . All rights reserved. PHP, Laravel, Next.js, React, TypeScript, Tailwind CSS.
           <div className="mt-2 flex flex-wrap justify-center gap-2">
-            {['next','react','vue','nuxt','laravel','php','sql','nodejs','typescript','javascript','html','css','tailwind'].map(tag => {
+            {['next','react','vue','nuxt','laravel','php','sql','nodejs','typescript','javascript','html','css','tailwind','prestashop','wordpress'].map(tag => {
               const seoTag = tag.replace(/\./g, '-').replace(/\s+/g, '-').toLowerCase();
               return (
                 <a
