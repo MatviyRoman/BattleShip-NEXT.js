@@ -68,7 +68,7 @@ function Confetti() {
       ctx.clearRect(0,0,W,H);
       angle+=0.01;
       for(let i=0;i<confettiCount;i++){
-        let c=confetti[i];
+        const c=confetti[i]; // changed let to const to fix prefer-const
         c.tiltAngle+=c.tiltAngleIncremental;
         c.y+= (Math.cos(angle+c.d)+3+c.r/2)/2;
         c.x+= Math.sin(angle);
@@ -100,7 +100,6 @@ export default function Home() {
   const [phase, setPhase] = useState<'placement' | 'attack' | 'gameover'>('placement');
   const [playerTurn, setPlayerTurn] = useState(true);
   const [message, setMessage] = useState<string>("");
-  const [opponentShips, setOpponentShips] = useState<ShipPlacement[]>(SHIPS.map((ship) => ({ ...ship, placed: false })));
   const [gameMode, setGameMode] = useState<GameMode>('bot');
   const [waitingForHuman, setWaitingForHuman] = useState(false);
   // End effect state for win/lose
@@ -111,20 +110,13 @@ export default function Home() {
     for (let i = 0; i < size; i++) {
       const r = row + (isVertical ? i : 0);
       const c = col + (isVertical ? 0 : i);
-      if (r >= BOARD_SIZE || c >= BOARD_SIZE || board[r][c].hasShip) return false;
+      if (r >= BOARD_SIZE || c >= BOARD_SIZE || board[r][c].hasShip) { return false; }
       // Check adjacent cells
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
           const nr = r + dr;
           const nc = c + dc;
-          if (
-            nr >= 0 && nr < BOARD_SIZE &&
-            nc >= 0 && nc < BOARD_SIZE &&
-            board[nr][nc].hasShip
-          ) {
-            // Not the current ship cell
-            if (!(nr === r && nc === c)) return false;
-          }
+          if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && board[nr][nc].hasShip && !(nr === r && nc === c)) { return false; }
         }
       }
     }
@@ -157,18 +149,12 @@ export default function Home() {
     for (let i = 0; i < size; i++) {
       const r = row + (isVertical ? i : 0);
       const c = col + (isVertical ? 0 : i);
-      if (r >= BOARD_SIZE || c >= BOARD_SIZE || board[r][c].hasShip) return false;
+      if (r >= BOARD_SIZE || c >= BOARD_SIZE || board[r][c].hasShip) { return false; }
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
           const nr = r + dr;
           const nc = c + dc;
-          if (
-            nr >= 0 && nr < BOARD_SIZE &&
-            nc >= 0 && nc < BOARD_SIZE &&
-            board[nr][nc].hasShip
-          ) {
-            if (!(nr === r && nc === c)) return false;
-          }
+          if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && board[nr][nc].hasShip && !(nr === r && nc === c)) { return false; }
         }
       }
     }
@@ -179,8 +165,7 @@ export default function Home() {
   useEffect(() => {
     if (phase === 'placement') {
       const newBoard = createEmptyBoard();
-      const placedShips: ShipPlacement[] = SHIPS.map((ship) => ({ ...ship, placed: false }));
-      SHIPS.forEach((ship, idx) => {
+      SHIPS.forEach((ship) => { // removed idx to fix unused variable error
         let placed = false;
         let attempts = 0;
         while (!placed && attempts < 1000) {
@@ -194,14 +179,12 @@ export default function Home() {
               newBoard[r][c].hasShip = true;
               newBoard[r][c].isPlaced = true;
             }
-            placedShips[idx].placed = true;
             placed = true;
           }
           attempts++;
         }
       });
       setOpponentBoard(newBoard);
-      setOpponentShips(placedShips);
     }
   }, [phase]);
 
@@ -323,7 +306,6 @@ export default function Home() {
     setPlayerBoard(createEmptyBoard());
     setOpponentBoard(createEmptyBoard());
     setShips(SHIPS.map((ship) => ({ ...ship, placed: false })));
-    setOpponentShips(SHIPS.map((ship) => ({ ...ship, placed: false })));
     setSelectedShip(null);
     setIsVertical(false);
     setPhase('placement');
