@@ -54,10 +54,14 @@ export default function RootLayout({
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             {['next','react','vue','nuxt','laravel','php','sql','nodejs','typescript','javascript','html','css','tailwind','prestashop','wordpress'].map(tag => {
               const seoTag = tag.replace(/\./g, '-').replace(/\s+/g, '-').toLowerCase();
+              const isSpecial = tag === 'laravel' || tag === 'prestashop';
+              const url = isSpecial
+                ? `https://roman.matviy.pp.ua/${seoTag}/`
+                : `https://roman.matviy.pp.ua/?s=${seoTag}`;
               return (
                 <a
                   key={tag}
-                  href={`https://roman.matviy.pp.ua/${seoTag}/`}
+                  href={url}
                   target="_blank"
                   className="inline-block px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-blue-100 hover:text-blue-700 border border-gray-200 text-[11px] transition-colors"
                 >
