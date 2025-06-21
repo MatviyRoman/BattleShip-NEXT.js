@@ -57,7 +57,7 @@ export default function RootLayout({
               return (
                 <a
                   key={tag}
-                  href={`https://roman.matviy.pp.ua/${seoTag}`}
+                  href={`https://roman.matviy.pp.ua/${seoTag}/`}
                   target="_blank"
                   className="inline-block px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-blue-100 hover:text-blue-700 border border-gray-200 text-[11px] transition-colors"
                 >
